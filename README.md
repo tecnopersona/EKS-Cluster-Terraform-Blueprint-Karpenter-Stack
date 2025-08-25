@@ -1,5 +1,3 @@
----
-
 ## 🌍 Demo & Public Access
 - 📊 **Grafana Public Dashboard:**  
   [View Dashboard](http://a6f28d2158180425ba5b05bebf33fc86-686528438.eu-west-1.elb.amazonaws.com:3000/public-dashboards/060a766092e34ad8a717fd4d2a12324c?from=now-12h&to=now&timezone=America%2FSantiago)  
@@ -54,3 +52,5 @@ The result is a highly available cluster that can automatically scale up or down
 - Metrics Server  
 - Horizontal Pod Autoscaler (HPA)  
 - Helm  
+
+---
