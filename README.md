@@ -1,9 +1,10 @@
 ## 🌍 Demo & Public Access
-- 📊 **Grafana Public Dashboard:**  
-  [View Dashboard](http://a6f28d2158180425ba5b05bebf33fc86-686528438.eu-west-1.elb.amazonaws.com:3000/public-dashboards/060a766092e34ad8a717fd4d2a12324c)  
+🌍 **Live Demos**
+**FULL VIDEO LINK:**
+🔗 [https://youtu.be/ZWHXX5YVELI](https://youtu.be/ZWHXX5YVELI)
 
-- 🔥 **Stress Test Application:**  
-  [Open Application](http://aws-kubernets-victoria-nginx-prometheus-karpenter-grafana-helm.danielweb.cl/)  
+**FAST VIDEO:**
+[![Watch the video](clusterautoscaler.jpg)](https://youtu.be/pW52DVsDRWo)
 
 ---
 
