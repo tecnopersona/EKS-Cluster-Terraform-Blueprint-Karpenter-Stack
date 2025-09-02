@@ -1,4 +1,4 @@
-## 🌍 Demo & Public Access
+## 🌍 Public Access
 🌍 **FULL VIDEO LINK:**
 🔗 [https://youtu.be/ZWHXX5YVELI](https://youtu.be/ZWHXX5YVELI)
 
