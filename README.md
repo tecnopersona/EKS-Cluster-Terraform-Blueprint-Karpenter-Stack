@@ -1,5 +1,5 @@
 ## 🌍 Public Access
-🌍 **FULL VIDEO LINK:**
+🌍 **SLOW VIDEO LINK:**
 🔗 [https://youtu.be/ZWHXX5YVELI](https://youtu.be/ZWHXX5YVELI)
 
 **FAST VIDEO:**
