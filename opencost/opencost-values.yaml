@@ -1,0 +1,10 @@
+# opencost-values.yaml
+opencost:
+  prometheus:
+    server: http://victoria-metrics-victoria-metrics-single-server.monitoring.svc.cluster.local:8428
+  cloudProvider:
+    name: "aws"
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::33032337034:role/ex-terraform-opencost"

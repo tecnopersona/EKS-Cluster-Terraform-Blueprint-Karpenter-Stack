@@ -1,0 +1,105 @@
+# La configuración de remoteWrite
+remoteWrite:
+  - url: "http://victoria-metrics-victoria-metrics-single-server.monitoring.svc.cluster.local:8428/api/v1/write"
+
+# Las solicitudes y límites de recursos para el pod de vmagent
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 1024Mi
+    cpu: 500m
+
+# --- ESTRUCTURA DE CONFIGURACIÓN MODERNA ---
+config:
+  global:
+    scrape_interval: 30s # Puedes ajustar el intervalo global aquí
+
+  scrape_configs:
+    # Job para monitorear vmagent a sí mismo
+    - job_name: vmagent
+      static_configs:
+        - targets:
+            - localhost:8429
+
+    # Job para monitorear los API Servers de Kubernetes
+    - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      job_name: kubernetes-apiservers
+      kubernetes_sd_configs:
+        - role: endpoints
+      relabel_configs:
+        - action: keep
+          regex: default;kubernetes;https
+          source_labels:
+            - __meta_kubernetes_namespace
+            - __meta_kubernetes_service_name
+            - __meta_kubernetes_endpoint_port_name
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        insecure_skip_verify: true
+
+    # Job para monitorear los Kubelets (cAdvisor)
+    - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      job_name: kubernetes-nodes-cadvisor
+      kubernetes_sd_configs:
+        - role: node
+      relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        - replacement: kubernetes.default.svc:443
+          target_label: __address__
+        - regex: (.+)
+          replacement: /api/v1/nodes/$1/proxy/metrics/cadvisor
+          source_labels:
+            - __meta_kubernetes_node_name
+          target_label: __metrics_path__
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        insecure_skip_verify: true
+
+    # --- NUESTROS JOBS PERSONALIZADOS ---
+
+    # Job para monitorear Karpenter
+    - job_name: 'karpenter'
+      kubernetes_sd_configs:
+        - role: endpoints
+          namespaces:
+            names: ['kube-system']
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_service_name]
+          action: keep
+          regex: 'karpenter'
+        - source_labels: [__meta_kubernetes_endpoint_port_name]
+          action: keep
+          regex: 'http-metrics'
+
+    # Job para monitorear kube-state-metrics
+    - job_name: 'kube-state-metrics'
+      kubernetes_sd_configs:
+        - role: endpoints
+          namespaces:
+            names: ['monitoring']
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_service_label_app_kubernetes_io_name]
+          action: keep
+          regex: 'kube-state-metrics'
+        - source_labels: [__meta_kubernetes_endpoint_port_name]
+          action: keep
+          regex: 'http'
+
+    # Job para monitorear kube-state-metrics
+    - job_name: 'opencost'
+      kubernetes_sd_configs:
+        - role: endpoints
+          namespaces:
+            names: ['opencost']
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_service_label_app_kubernetes_io_name]
+          action: keep
+          regex: 'opencost'
+        - source_labels: [__meta_kubernetes_endpoint_port_name]
+          action: keep
+          regex: 'http'

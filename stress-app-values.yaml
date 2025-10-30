@@ -1,0 +1,18 @@
+# Cantidad de pods que queremos crear
+replicaCount: 10
+
+# Recursos que pedirá cada pod. ¡Esto es lo que estresará al clúster!
+resources:
+  requests:
+    cpu: 500m    # "m" significa "millicores", 500m es medio core de CPU
+    memory: 512Mi # "Mi" significa "Mebibytes"
+
+# Configuración del Ingress para exponer la aplicación con tu subdominio
+ingress:
+  enabled: true
+  className: nginx # Le decimos que use el Ingress Controller que instalamos
+  hosts:
+    - host: aws-kubernets-victoria-nginx-prometheus-karpenter-grafana-helm.danielweb.cl
+      paths:
+        - path: /
+          pathType: ImplementationSpecific

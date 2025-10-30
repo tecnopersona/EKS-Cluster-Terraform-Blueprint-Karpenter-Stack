@@ -1,0 +1,11 @@
+persistence:
+  enabled: true
+  size: 10Gi
+  storageClassName: gp2
+
+adminUser: admin
+adminPassword: admin123
+
+service:
+  type: LoadBalancer
+  port: 3000

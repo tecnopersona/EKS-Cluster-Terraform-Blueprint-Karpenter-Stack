@@ -1,0 +1,7 @@
+server:
+  persistentVolume:
+    enabled: true          # activa el uso de PVC
+    storageClassName: gp2  # debe coincidir con el StorageClass que existe en tu cluster
+    size: 20Gi             # tamaño del volumen
+    accessModes:
+      - ReadWriteOnce
